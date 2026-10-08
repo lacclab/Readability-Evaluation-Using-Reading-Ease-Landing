@@ -131,6 +131,14 @@ footer{max-width:960px;margin:0 auto;padding-block:20px 40px;border-top:1px soli
 .abs-toggle{display:block;margin:10px auto 0;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 16px;font:500 15px var(--body);cursor:pointer}
 .abs-toggle:hover{border-color:var(--blue)}
 header .buttons.secondary{margin-top:-6px}
+@media (max-width:640px){
+  .flow{gap:28px}
+  .row{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:6px}
+  .row .step{flex:none}
+  .arrow{transform:rotate(90deg);line-height:1;padding:2px 0}
+  .delta{align-items:center;text-align:center;padding:4px 0}
+  .delta .icons{justify-content:center}
+}
 </style>
 </head>
 <body>

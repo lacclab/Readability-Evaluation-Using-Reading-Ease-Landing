@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eye Tracking Evaluation of Readability Methods</title>
+<meta name="description" content="Eye Tracking Based Cognitive Evaluation of Automatic Readability Assessment Methods. Computational Linguistics, 2026. LaCC Lab, Technion.">
+<meta name="keywords" content="readability, eye tracking, reading, computational psycholinguistics, text simplification, EMNLP 2026, Computational Linguistics">
+<meta property="og:title" content="Eye Tracking Based Cognitive Evaluation of Automatic Readability Assessment Methods">
+<meta property="og:description" content="Readability scores barely predict reading ease measured with eye tracking. Computational Linguistics, 2026.">
+<meta property="og:image" content="static/images/results.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one centered column like the lab's project pages: lab bar, title block, link buttons, abstract, key result, BibTeX. */
+:root{
+  --bg:#ffffff; --surface:#f5f6f8; --fg:#16181d; --muted:#5a606b; --rule:#e2e5ea;
+  --blue:#1f6fbf; --orange:#c2690a; --btn:#16181d; --btn-fg:#ffffff;
+  --display:"DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121418; --surface:#1b1e24; --fg:#eceef2; --muted:#a3a9b4; --rule:#2c3038;
+  --blue:#7fb2ec; --orange:#f0a24f; --btn:#eceef2; --btn-fg:#121418; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121418; --surface:#1b1e24; --fg:#eceef2; --muted:#a3a9b4; --rule:#2c3038;
+  --blue:#7fb2ec; --orange:#f0a24f; --btn:#eceef2; --btn-fg:#121418; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;padding:0 16px}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.labbar{max-width:960px;margin:0 auto;padding-block:14px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--rule);font-size:15px}
+.labbar .home{font-weight:700;color:var(--fg);text-decoration:none}
+.labbar nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+.labbar nav a{color:var(--muted);text-decoration:none}
+.labbar nav a:hover{color:var(--blue)}
+main{max-width:960px;margin:0 auto;padding-block:48px 64px;display:flex;flex-direction:column;gap:56px}
+header{text-align:center;display:flex;flex-direction:column;gap:18px;align-items:center}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.15;margin:0;text-wrap:balance;max-width:26ch}
+h1 .et{color:var(--blue)} h1 .ara{color:var(--orange)}
+.authors{font-size:19px;margin:0}
+.authors a{color:var(--fg);text-decoration-color:var(--rule);text-underline-offset:4px}
+.authors a:hover{color:var(--blue)}
+.aff{margin:0;color:var(--muted);font-size:16px}
+.venue{margin:0;font-weight:500;font-size:18px}
+.venue span{color:var(--muted);font-weight:400}
+.buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;background:var(--btn);color:var(--btn-fg);text-decoration:none;font-weight:500;font-size:16px}
+.btn:hover{opacity:.85}
+.btn.lab{background:transparent;color:var(--fg);border:2px solid var(--fg)}
+.btn svg{width:18px;height:18px;flex:none}
+section{display:flex;flex-direction:column;gap:16px}
+h2{font-family:var(--display);font-size:26px;margin:0;text-align:center}
+.abstract p{margin:0 auto;max-width:68ch;text-align:justify;hyphens:auto}
+.result{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:center}
+@media (max-width:760px){.result{grid-template-columns:minmax(0,1fr)}}
+.result figure{margin:0;background:#ffffff;border:1px solid var(--rule);border-radius:12px;padding:12px}
+.result figure img{display:block;width:100%;height:auto}
+.result figcaption{color:#444a55;font-size:14px;margin-top:8px}
+.takeaways{display:flex;flex-direction:column;gap:18px;min-width:0}
+.takeaways h3{margin:0;font-size:20px}
+.takeaways p{margin:4px 0 0;color:var(--muted)}
+.k-orange{color:var(--orange)} .k-blue{color:var(--blue)}
+.bib{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;overflow-x:auto}
+.bib pre{margin:0;font-family:var(--mono);font-size:14px;line-height:1.55;white-space:pre}
+.copy{position:absolute;top:10px;right:10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:8px;padding:4px 12px;font:500 14px var(--body);cursor:pointer}
+footer{max-width:960px;margin:0 auto;padding-block:20px 40px;border-top:1px solid var(--rule);color:var(--muted);font-size:14px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="labbar">
+  <a class="home" href="https://lacclab.github.io/">LaCC Lab · Technion</a>
+  <nav aria-label="More works from our lab">
+    <a href="https://lacclab.github.io/Open-Ended-Goal-Decoding-Landing/">Open-Ended Goal Decoding (ICLR 2026)</a>
+    <a href="https://eyebench.github.io/">EyeBench (NeurIPS 2025)</a>
+    <a href="https://lacclab.github.io/Decoding-Reading-Goals-from-Eye-Movements-Landing/">Decoding Reading Goals (ACL 2025)</a>
+  </nav>
+</div>
+<main>
+  <header>
+    <h1><span class="et">Eye Tracking</span> Based Cognitive Evaluation of <span class="ara">Automatic Readability Assessment Methods</span></h1>
+    <p class="authors">
+      Keren Gruteke Klein<sup>*</sup>,
+      Shachar Frenkel,
+      <a href="https://omershubi.github.io/">Omer Shubi</a>,
+      <a href="https://people.csail.mit.edu/berzak/">Yevgeni Berzak</a>
+    </p>
+    <p class="aff">Faculty of Data and Decision Sciences, Technion – Israel Institute of Technology<br><sup>*</sup>Corresponding author</p>
+    <p class="venue">Computational Linguistics, 2026 <span>· Presented at EMNLP 2026</span></p>
+    <div class="buttons">
+      <a class="btn" href="https://doi.org/10.1162/COLI.a.649"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>Paper</a>
+      <a class="btn" href="https://arxiv.org/abs/2502.11150"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"/></svg>arXiv</a>
+      <a class="btn" href="https://github.com/lacclab/Readability-Evaluation-Using-Reading-Ease"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>Code</a>
+      <a class="btn" href="https://github.com/lacclab/OneStop-Eye-Movements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>OneStop Data</a>
+      <a class="btn lab" href="https://lacclab.github.io/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>LaCC Lab</a>
+    </div>
+  </header>
+
+  <section class="abstract" aria-labelledby="abs">
+    <h2 id="abs">Abstract</h2>
+    <p>Automatic methods for scoring text readability have been studied for over a century, and are widely used in research and in user-facing applications in many domains. Thus far, the development and evaluation of such methods have primarily relied on two types of offline human behavioral data, performance on reading comprehension tests and ratings of text readability levels. In this work, we instead focus on a fundamental and understudied aspect of readability, real-time reading ease, captured with online reading measures using eye tracking. We introduce a new cognitive evaluation framework for readability scoring methods that quantifies their ability to account for reading ease, while controlling for content variation across texts. Applying this evaluation to prominent traditional readability formulas, NLP-based methods, commercial systems used in education, and frontier LLMs suggests that they are all poor predictors of English reading ease in adults as compared to word properties commonly used in psycholinguistics for the prediction of reading times. This outcome holds across L1 and L2 speakers, different reading regimes, and textual units of different lengths. Our results reveal an important limitation of a wide range of methods for readability scoring, highlight the utility of real-time behavioral benchmarks for readability research, and call for new, cognitively driven readability scoring approaches that can better account for how humans experience texts in real time.</p>
+  </section>
+
+  <section aria-labelledby="res">
+    <h2 id="res">Key Result</h2>
+    <div class="result">
+      <figure>
+        <img src="static/images/results.png" alt="Bar chart of Pearson r between the change in each method's score and the change in reading ease, from original to simplified texts. Readability methods from 1948 to 2025 are low; surprisal is highest.">
+        <figcaption>Pearson r between Δ Score (original − simplified) and Δ Reading Ease from eye tracking, for each method. Bar color marks significance.</figcaption>
+      </figure>
+      <div class="takeaways">
+        <div><h3 class="k-orange">Readability Methods</h3><p>Traditional formulas, NLP models, commercial systems and LLMs, from 1948 to 2025, are weak and mostly not significant predictors of reading ease.</p></div>
+        <div><h3>Psycholinguistic Measures</h3><p>Word properties used to predict reading times do better. Surprisal from a small language model is the best predictor overall.</p></div>
+        <div><h3 class="k-blue">Data</h3><p>OneStop: 360 native and 278 non-native English speakers reading 162 original and simplified paragraph pairs with eye tracking.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="bibh">
+    <h2 id="bibh">BibTeX</h2>
+    <div class="bib">
+      <button class="copy" id="copybib" type="button">Copy</button>
+<pre id="bibtext">@article{grutekeklein2026eye,
+  title   = {Eye Tracking Based Cognitive Evaluation of Automatic Readability Assessment Methods},
+  author  = {Gruteke Klein, Keren and Frenkel, Shachar and Shubi, Omer and Berzak, Yevgeni},
+  journal = {Computational Linguistics},
+  year    = {2026},
+  doi     = {10.1162/COLI.a.649},
+  url     = {https://doi.org/10.1162/COLI.a.649}
+}</pre>
+    </div>
+  </section>
+</main>
+<footer>Language, Computation and Cognition Lab, Technion · <a href="https://lacclab.github.io/">lacclab.github.io</a></footer>
+<script>
+document.getElementById('copybib').addEventListener('click', function(){
+  var b=this, t=document.getElementById('bibtext').textContent;
+  function done(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }
+  function select(){ var r=document.createRange(); r.selectNodeContents(document.getElementById('bibtext')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selected'; }
+  try { navigator.clipboard.writeText(t).then(done, select); } catch(e){ select(); }
+});
+</script>
+</body>
+</html>

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap">
 <style>
-/* Layout: one centered column like the lab's project pages: lab bar, title block, link buttons, abstract, key result, BibTeX. */
+/* Layout: one centered column like the lab's project pages: title block, link buttons, abstract, sections, BibTeX, lab banner. */
 :root{
   --bg:#ffffff; --surface:#f5f6f8; --fg:#16181d; --muted:#5a606b; --rule:#e2e5ea;
   --blue:#1f6fbf; --orange:#c2690a; --btn:#16181d; --btn-fg:#ffffff;
@@ -49,6 +49,7 @@ h1 .et{color:var(--blue)} h1 .ara{color:var(--orange)}
 .buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:6px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;background:var(--btn);color:var(--btn-fg);text-decoration:none;font-weight:500;font-size:16px}
 .btn:hover{opacity:.85}
+button.btn{border:0;cursor:pointer;font-family:var(--body)}
 .btn.lab{background:transparent;color:var(--fg);border:2px solid var(--fg)}
 .btn svg{width:18px;height:18px;flex:none}
 section{display:flex;flex-direction:column;gap:16px}
@@ -67,57 +68,206 @@ h2{font-family:var(--display);font-size:26px;margin:0;text-align:center}
 .bib pre{margin:0;font-family:var(--mono);font-size:14px;line-height:1.55;white-space:pre}
 .copy{position:absolute;top:10px;right:10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:8px;padding:4px 12px;font:500 14px var(--body);cursor:pointer}
 footer{max-width:960px;margin:0 auto;padding-block:20px 40px;border-top:1px solid var(--rule);color:var(--muted);font-size:14px;text-align:center}
+
+.flow{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.step{flex:1 1 150px;min-width:0;border:2px solid var(--rule);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;justify-content:center}
+.step b{font-size:16px} .step span{color:var(--muted);font-size:15px}
+.row.eye .step{border-color:var(--blue)} .row.ara .step{border-color:var(--orange)}
+.arrow{align-self:center;color:var(--muted);font-size:22px;flex:none}
+.delta{flex:0 1 auto;border:none;padding:0 4px}
+.row.eye .delta b{color:var(--blue)} .row.ara .delta b{color:var(--orange)}
+.pearson{border:2px solid var(--fg);border-radius:12px;padding:14px 18px;text-align:center}
+.pearson b{font-size:20px} .pearson p{margin:4px 0 0;color:var(--muted)}
+.red{color:#c0392b} .green{color:#2e8b57}
+:root[data-theme="dark"] .red, :root[data-theme="dark"] .green{filter:brightness(1.4)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .red,:root:not([data-theme="light"]) .green{filter:brightness(1.4)}}
+.num{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px}
+.readers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.readers{grid-template-columns:minmax(0,1fr)}}
+.readers figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.readers img{width:100%;height:auto;border:1px solid var(--rule);border-radius:10px;background:#ffffff}
+.readers figcaption{font-size:16px} .readers figcaption b{color:var(--blue)}
+.lead{margin:0 auto;max-width:68ch;text-align:center;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--rule);border-radius:12px;padding:16px 18px;min-width:0}
+.card h3{margin:0;font-size:19px} .card p{margin:6px 0 0;color:var(--muted)}
+.takeaways-list{margin:0 auto;max-width:68ch;padding-left:1.2em;display:flex;flex-direction:column;gap:10px;font-size:18px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:10px;font-size:15px;color:var(--fg)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:22px;height:14px;border:1px solid #111;border-radius:2px}
+.tool-link{margin:4px 0 0;text-align:center}
+.more{max-width:960px;margin:8px auto 32px;padding:32px 24px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;text-align:center}
+.more h2{margin:0 0 20px}
+.more-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+@media (max-width:760px){.more-grid{grid-template-columns:minmax(0,1fr)}.more{margin-inline:16px}}
+.more-grid a{display:flex;flex-direction:column;gap:4px;padding:16px;background:var(--bg);border:1px solid var(--rule);border-radius:12px;text-decoration:none;color:var(--fg)}
+.more-grid a:hover{border-color:var(--blue)}
+.more-grid span{color:var(--muted);font-size:15px}
+.more-lab{margin:20px 0 0}
+.ic{width:28px;height:28px;flex:none;vertical-align:middle}
+.ic.big{width:40px;height:40px;margin-bottom:8px}
+.ic.sm{width:18px;height:18px;margin-top:-3px}
+.icons{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.pearson .icons{justify-content:center}
+.step b .red,.step .num .red{color:#c0392b} .step b .green,.step .num .green{color:#2e8b57}
+.c-red{color:#c0392b} .c-green{color:#2e8b57} .c-blue{color:var(--blue)} .c-orange{color:var(--orange)} .c-fg{color:var(--fg)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .c-red,:root:not([data-theme="light"]) .c-green{filter:brightness(1.4)}}
+.icons-list{list-style:none;padding-left:0}
+.icons-list li{display:flex;gap:12px;align-items:flex-start}
+.icons-list .ic{margin-top:1px}
+.card{text-align:left}
+.note{margin:-4px 0 0;text-align:right;color:var(--muted);font-size:14px;font-style:italic}
+.wide{margin:0;background:#ffffff;border:1px solid var(--rule);border-radius:12px;padding:12px}
+.wide img{display:block;width:100%;height:auto}
+.wide figcaption{color:#444a55;font-size:14px;margin-top:8px}
+.findings{margin:0 auto;max-width:68ch;padding-left:1.2em;display:flex;flex-direction:column;gap:8px;font-size:18px}
+.k-red{color:#c0392b} .k-green{color:#2e8b57}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .k-red,:root:not([data-theme="light"]) .k-green{filter:brightness(1.4)}}
+.abs-fold p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+.abs-fold.open p{display:block;-webkit-line-clamp:unset;overflow:visible}
+.abs-toggle{display:block;margin:10px auto 0;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 16px;font:500 15px var(--body);cursor:pointer}
+.abs-toggle:hover{border-color:var(--blue)}
+header .buttons.secondary{margin-top:-6px}
 </style>
 </head>
 <body>
-<div class="labbar">
-  <a class="home" href="https://lacclab.github.io/">LaCC Lab · Technion</a>
-  <nav aria-label="More works from our lab">
-    <a href="https://lacclab.github.io/Open-Ended-Goal-Decoding-Landing/">Open-Ended Goal Decoding (ICLR 2026)</a>
-    <a href="https://eyebench.github.io/">EyeBench (NeurIPS 2025)</a>
-    <a href="https://lacclab.github.io/Decoding-Reading-Goals-from-Eye-Movements-Landing/">Decoding Reading Goals (ACL 2025)</a>
-  </nav>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></g></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></g></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></g></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></g></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></g></symbol>
+  <symbol id="i-reader" viewBox="0 0 56 64"><circle cx="28" cy="15" r="13" fill="currentColor"/><path d="M4 64 C4 42 14 32 28 32 C42 32 52 42 52 64 Z" fill="currentColor"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 48 40"><g fill="none" stroke="currentColor" stroke-width="3.5"><path d="M2 10V2h8M38 2h8v8M46 30v8h-8M10 38H2v-8"/><path d="M9 20c4-6.5 9-9.5 15-9.5s11 3 15 9.5c-4 6.5-9 9.5-15 9.5s-11-3-15-9.5z"/><circle cx="24" cy="20" r="6"/></g><circle cx="24" cy="20" r="3.2" fill="currentColor"/></symbol>
+</svg>
 <main>
   <header>
     <h1><span class="et">Eye Tracking</span> Based Cognitive Evaluation of <span class="ara">Automatic Readability Assessment Methods</span></h1>
     <p class="authors">
-      Keren Gruteke Klein<sup>*</sup>,
+      <a href="https://kerengruteke.github.io/">Keren Gruteke Klein</a>,
       Shachar Frenkel,
       <a href="https://omershubi.github.io/">Omer Shubi</a>,
       <a href="https://people.csail.mit.edu/berzak/">Yevgeni Berzak</a>
     </p>
-    <p class="aff">Faculty of Data and Decision Sciences, Technion – Israel Institute of Technology<br><sup>*</sup>Corresponding author</p>
+    <p class="aff">Faculty of Data and Decision Sciences, Technion – Israel Institute of Technology</p>
     <p class="venue">Computational Linguistics, 2026 <span>· Presented at EMNLP 2026</span></p>
     <div class="buttons">
       <a class="btn" href="https://doi.org/10.1162/COLI.a.649"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>Paper</a>
-      <a class="btn" href="https://arxiv.org/abs/2502.11150"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"/></svg>arXiv</a>
       <a class="btn" href="https://github.com/lacclab/Readability-Evaluation-Using-Reading-Ease"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>Code</a>
-      <a class="btn" href="https://github.com/lacclab/OneStop-Eye-Movements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>OneStop Data</a>
+      <button class="btn" id="citebtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 7h4v4H7zM7 11c0 3-1 5-3 6M15 7h4v4h-4zM15 11c0 3-1 5-3 6"/></svg><span>Cite This Paper</span></button>
+    </div>
+    <div class="buttons secondary">
+      <a class="btn lab" href="https://github.com/lacclab/OneStop-Eye-Movements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>OneStop Data</a>
       <a class="btn lab" href="https://lacclab.github.io/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>LaCC Lab</a>
     </div>
   </header>
 
   <section class="abstract" aria-labelledby="abs">
     <h2 id="abs">Abstract</h2>
-    <p>Automatic methods for scoring text readability have been studied for over a century, and are widely used in research and in user-facing applications in many domains. Thus far, the development and evaluation of such methods have primarily relied on two types of offline human behavioral data, performance on reading comprehension tests and ratings of text readability levels. In this work, we instead focus on a fundamental and understudied aspect of readability, real-time reading ease, captured with online reading measures using eye tracking. We introduce a new cognitive evaluation framework for readability scoring methods that quantifies their ability to account for reading ease, while controlling for content variation across texts. Applying this evaluation to prominent traditional readability formulas, NLP-based methods, commercial systems used in education, and frontier LLMs suggests that they are all poor predictors of English reading ease in adults as compared to word properties commonly used in psycholinguistics for the prediction of reading times. This outcome holds across L1 and L2 speakers, different reading regimes, and textual units of different lengths. Our results reveal an important limitation of a wide range of methods for readability scoring, highlight the utility of real-time behavioral benchmarks for readability research, and call for new, cognitively driven readability scoring approaches that can better account for how humans experience texts in real time.</p>
+    <div class="abs-fold" id="absfold"><p><span class="k-orange">Automatic methods for scoring text readability</span> have been studied for over a century, and are widely used in research and in user-facing applications in many domains. Thus far, the development and evaluation of such methods have primarily relied on two types of offline human behavioral data, performance on reading comprehension tests and ratings of text readability levels. In this work, we instead focus on a fundamental and understudied aspect of readability, <span class="k-blue">real-time reading ease</span>, captured with <span class="k-blue">online reading measures using eye tracking</span>. We introduce a new cognitive evaluation framework for <span class="k-orange">readability scoring methods</span> that quantifies their ability to <span class="k-blue">account for reading ease</span>, while controlling for content variation across texts. Applying this evaluation to prominent <span class="k-orange">traditional readability formulas, NLP-based methods, commercial systems used in education, and frontier LLMs</span> suggests that they are all poor predictors of <span class="k-blue">English reading ease</span> in adults as compared to word properties commonly used in psycholinguistics for the prediction of reading times. This outcome holds across L1 and L2 speakers, different reading regimes, and textual units of different lengths. Our results reveal an important limitation of a wide range of <span class="k-orange">methods for readability scoring</span>, highlight the utility of <span class="k-blue">real-time behavioral benchmarks</span> for readability research, and call for new, cognitively driven readability scoring approaches that can better account for how humans experience texts in real time.</p></div>
+    <button class="abs-toggle" id="abstoggle" type="button" aria-expanded="false" aria-controls="absfold">Read full abstract</button>
+  </section>
+
+
+  <section aria-labelledby="rb">
+    <h2 id="rb">Reading Behaviour</h2>
+    <p class="lead">Two readers of the same paragraph, both answering the comprehension question correctly. Replays at 4× speed with <a href="https://github.com/lacclab/scanpath-studio">Scanpath Studio</a>.</p>
+    <div class="readers">
+      <figure><img src="static/images/reader_a.gif" alt="Replay of reader A: many fixations and regressions over the paragraph" loading="lazy"><figcaption><b>Reader A · 82 s</b> · <svg class="ic c-fg sm" aria-hidden="true"><use href="#i-check"/></svg> Correct</figcaption></figure>
+      <figure><img src="static/images/reader_b.gif" alt="Replay of reader B: fewer fixations, fluent reading of the same paragraph" loading="lazy"><figcaption><b>Reader B · 28 s</b> · <svg class="ic c-fg sm" aria-hidden="true"><use href="#i-check"/></svg> Correct</figcaption></figure>
+    </div>
+    <p class="tool-link"><a class="btn lab" href="https://github.com/lacclab/scanpath-studio">Scanpath Studio · Replay Eye-Tracking Trials</a></p>
+    <p class="lead">Same answer, very different <span class="k-blue">reading</span>. Comprehension tests and ratings miss what happens while people read.</p>
+  </section>
+
+  <section aria-labelledby="meth">
+    <h2 id="meth">Method</h2>
+    <div class="flow">
+      <div class="row eye">
+        <div class="step"><div class="icons"><svg class="ic c-red" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-green" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-blue" aria-hidden="true"><use href="#i-reader"/></svg><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg></div><b><span class="red">Original</span> &amp; <span class="green">Simplified</span></b><span>Read with eye tracking</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step"><div class="icons"><svg class="ic c-blue" aria-hidden="true"><use href="#i-clock"/></svg></div><b>Total Fixation · Skip Rate · Regression Rate</b><span>Reading-ease measures</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step delta"><div class="icons"><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg></div><b>Δ Reading Ease</b></div>
+      </div>
+      <div class="row ara">
+        <div class="step"><div class="icons"><svg class="ic c-red" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-green" aria-hidden="true"><use href="#i-book"/></svg></div><b><span class="red">Original</span> &amp; <span class="green">Simplified</span></b><span>Scored by each method</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step"><div class="icons"><svg class="ic c-orange" aria-hidden="true"><use href="#i-settings"/></svg></div><b class="k-orange">Readability Methods</b><span>Formulas · NLP · LLMs · Commercial</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step delta"><div class="icons"><svg class="ic c-orange" aria-hidden="true"><use href="#i-settings"/></svg></div><b>Δ Score</b></div>
+      </div>
+      <div class="pearson"><div class="icons"><svg class="ic c-fg" aria-hidden="true"><use href="#i-chart"/></svg></div><b>Pearson r(<span class="k-orange">Δ Score</span>, <span class="k-blue">Δ Reading Ease</span>)</b><p>Across all text pairs: how well each method reflects reading ease. Δ = original − simplified.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ex">
+    <h2 id="ex">Example</h2>
+    <div class="flow">
+      <div class="row eye">
+        <div class="step"><div class="icons"><svg class="ic c-red" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-green" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-blue" aria-hidden="true"><use href="#i-reader"/></svg><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg></div><b>One text pair</b><span>About 100 readers per version on average</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step"><div class="icons"><svg class="ic c-blue" aria-hidden="true"><use href="#i-clock"/></svg></div><b>Total Fixation</b><span class="num"><span class="red">250 ms</span> − <span class="green">200 ms</span></span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step delta"><div class="icons"><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg></div><b>Δ Reading Ease = 50 ms</b></div>
+      </div>
+      <div class="row ara">
+        <div class="step"><div class="icons"><svg class="ic c-red" aria-hidden="true"><use href="#i-book"/></svg><svg class="ic c-green" aria-hidden="true"><use href="#i-book"/></svg></div><b>One text pair</b><span>Scored by a readability method</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step"><div class="icons"><svg class="ic c-orange" aria-hidden="true"><use href="#i-settings"/></svg></div><b class="k-orange">Flesch-Kincaid</b><span class="num"><span class="red">9.66</span> − <span class="green">8.47</span></span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step delta"><div class="icons"><svg class="ic c-orange" aria-hidden="true"><use href="#i-settings"/></svg></div><b>Δ Score = 1.19</b></div>
+      </div>
+      <div class="pearson"><div class="icons"><svg class="ic c-fg" aria-hidden="true"><use href="#i-chart"/></svg></div><b>One pair = one point. All pairs → Pearson r</b></div>
+      <p class="note">Illustrative numbers.</p>
+    </div>
   </section>
 
   <section aria-labelledby="res">
-    <h2 id="res">Key Result</h2>
+    <h2 id="res">Results</h2>
     <div class="result">
       <figure>
         <img src="static/images/results.png" alt="Bar chart of Pearson r between the change in each method's score and the change in reading ease, from original to simplified texts. Readability methods from 1948 to 2025 are low; surprisal is highest.">
-        <figcaption>Pearson r between Δ Score (original − simplified) and Δ Reading Ease from eye tracking, for each method. Bar color marks significance.</figcaption>
+        <figcaption>Pearson r between Δ Score (original − simplified) and Δ Reading Ease from eye tracking, for each method. Bar color marks significance.
+          <span class="legend" aria-label="Legend">
+            <span><i style="background:#7d8a87"></i>Not significant</span>
+            <span><i style="background:#d9843a"></i>p &lt; 0.01</span>
+            <span><i style="background:#c1554a"></i>p &lt; 0.001</span>
+          </span></figcaption>
       </figure>
       <div class="takeaways">
         <div><h3 class="k-orange">Readability Methods</h3><p>Traditional formulas, NLP models, commercial systems and LLMs, from 1948 to 2025, are weak and mostly not significant predictors of reading ease.</p></div>
-        <div><h3>Psycholinguistic Measures</h3><p>Word properties used to predict reading times do better. Surprisal from a small language model is the best predictor overall.</p></div>
+        <div><h3>Psycholinguistic Measures</h3><p>Word properties used to predict reading times do better. Surprisal is the best predictor overall.</p></div>
         <div><h3 class="k-blue">Data</h3><p>OneStop: 360 native and 278 non-native English speakers reading 162 original and simplified paragraph pairs with eye tracking.</p></div>
       </div>
     </div>
   </section>
+
+  <section aria-labelledby="rob">
+    <h2 id="rob">Robustness</h2>
+    <div class="cards">
+      <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-users"/></svg><h3>Readers</h3><p>Native &amp; non-native English speakers</p></div>
+      <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-search"/></svg><h3>Reading Regimes</h3><p>Reading for comprehension &amp; information seeking</p></div>
+      <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-book"/></svg><h3>Text Units</h3><p>Sentences &amp; paragraphs</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="tk">
+    <h2 id="tk">Takeaways</h2>
+    <ul class="takeaways-list icons-list">
+      <li><svg class="ic c-orange" aria-hidden="true"><use href="#i-warn"/></svg><span><span class="k-orange">Existing readability scores</span> may not reflect <span class="k-blue">reading ease</span>.</span></li>
+      <li><svg class="ic c-fg" aria-hidden="true"><use href="#i-bulb"/></svg><span>Surprisal is a simple, strong baseline.</span></li>
+      <li><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg><span><span class="k-orange">Next readability measures</span> should reflect <span class="k-blue">reading ease</span>.</span></li>
+    </ul>
+  </section>
+
 
   <section aria-labelledby="bibh">
     <h2 id="bibh">BibTeX</h2>
@@ -134,14 +284,35 @@ footer{max-width:960px;margin:0 auto;padding-block:20px 40px;border-top:1px soli
     </div>
   </section>
 </main>
+<section class="more" aria-labelledby="more-h">
+  <h2 id="more-h">Read More from Our Lab</h2>
+  <div class="more-grid">
+    <a href="https://lacclab.github.io/Text-Simplification-Effects-Landing/"><b>Text Simplification Effects</b><span>CogSci 2025</span></a>
+    <a href="https://lacclab.github.io/Surprisal-Reading-Regimes-Landing/"><b>Surprisal in Reading Regimes</b><span>CoNLL 2024</span></a>
+    <a href="https://lacclab.github.io/Open-Ended-Goal-Decoding-Landing/"><b>Open-Ended Goal Decoding</b><span>ICLR 2026</span></a>
+    <a href="https://eyebench.github.io/"><b>EyeBench</b><span>NeurIPS 2025</span></a>
+    <a href="https://lacclab.github.io/Decoding-Reading-Goals-from-Eye-Movements-Landing/"><b>Decoding Reading Goals</b><span>ACL 2025</span></a>
+  </div>
+  <p class="more-lab"><a class="btn lab" href="https://lacclab.github.io/">LaCC Lab · Technion</a></p>
+</section>
 <footer>Language, Computation and Cognition Lab, Technion · <a href="https://lacclab.github.io/">lacclab.github.io</a></footer>
 <script>
+function copyBib(label, idle, onFail){
+  var t=document.getElementById('bibtext').textContent;
+  function done(){ label.textContent='Copied!'; setTimeout(function(){ label.textContent=idle; },1500); }
+  try { navigator.clipboard.writeText(t).then(done, onFail); } catch(e){ onFail(); }
+}
+function selectBib(){ var r=document.createRange(); r.selectNodeContents(document.getElementById('bibtext')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
 document.getElementById('copybib').addEventListener('click', function(){
-  var b=this, t=document.getElementById('bibtext').textContent;
-  function done(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1500); }
-  function select(){ var r=document.createRange(); r.selectNodeContents(document.getElementById('bibtext')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selected'; }
-  try { navigator.clipboard.writeText(t).then(done, select); } catch(e){ select(); }
+  var b=this; copyBib(b,'Copy',function(){ selectBib(); b.textContent='Selected'; });
 });
+document.getElementById('citebtn').addEventListener('click', function(){
+  var l=this.querySelector('span'); copyBib(l,'Cite This Paper',function(){ document.getElementById('bibh').scrollIntoView({behavior:'smooth'}); selectBib(); l.textContent='BibTeX Below'; setTimeout(function(){ l.textContent='Cite This Paper'; },1500); });
+});
+</script>
+<script>
+(function(){var w=document.getElementById('absfold'),b=document.getElementById('abstoggle');if(!w||!b)return;
+b.addEventListener('click',function(){var o=w.classList.toggle('open');b.textContent=o?'Show less':'Read full abstract';b.setAttribute('aria-expanded',o);});})();
 </script>
 </body>
 </html>

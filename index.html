@@ -141,6 +141,28 @@ header .buttons.secondary{margin-top:-6px}
 }
 .tldr{margin:6px auto 0;max-width:62ch;padding:14px 18px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);font-size:18px;line-height:1.5;text-align:left}
 .tldr-label{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--muted);border:1px solid var(--rule);border-radius:4px;padding:1px 6px;margin-right:10px;vertical-align:2px;background:var(--bg)}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px 16px;align-items:center;max-width:820px;margin:0 auto;width:100%}
+.compare .hd{font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px}
+.compare .cell{border:1px solid var(--rule);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:center;min-width:0}
+.compare .cell.bad{color:var(--muted)} .compare .cell.good{border-color:var(--blue)}
+.compare .arrow{text-align:center}
+@media (max-width:640px){.compare{gap:8px 6px;font-size:14px}.compare .cell{padding:8px 8px;gap:6px}.compare .hd{font-size:14px}.compare .arrow{transform:none;font-size:16px}}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.pair{grid-template-columns:minmax(0,1fr)}}
+.pair .txt{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;font-size:16px;line-height:1.6;min-width:0}
+.pair .txt h3{margin:0 0 8px;font-size:18px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.pair .txt h3 small{font-weight:400;color:var(--muted);font-size:14px}
+mark.d-red{background:transparent;color:#c0392b;font-weight:700} mark.d-green{background:transparent;color:#2e8b57;font-weight:700}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) mark.d-red,:root:not([data-theme="light"]) mark.d-green{filter:brightness(1.4)}}
+.methods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.methods{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.methods{grid-template-columns:minmax(0,1fr)}}
+.methods .card h3{font-size:17px} .methods ul{margin:6px 0 0;padding:0;list-style:none;color:var(--muted);font-size:15px;line-height:1.5}
+.methods .card.psy{border-style:dashed}
+.readers figcaption b.c-red{color:#c0392b} .readers figcaption b.c-green{color:#2e8b57}
+.cards.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:860px){.cards.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.cards.four{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -155,6 +177,7 @@ header .buttons.secondary{margin-top:-6px}
   <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></g></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></g></symbol>
   <symbol id="i-reader" viewBox="0 0 56 64"><circle cx="28" cy="15" r="13" fill="currentColor"/><path d="M4 64 C4 42 14 32 28 32 C42 32 52 42 52 64 Z" fill="currentColor"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></g></symbol>
   <symbol id="i-eye" viewBox="0 0 48 40"><g fill="none" stroke="currentColor" stroke-width="3.5"><path d="M2 10V2h8M38 2h8v8M46 30v8h-8M10 38H2v-8"/><path d="M9 20c4-6.5 9-9.5 15-9.5s11 3 15 9.5c-4 6.5-9 9.5-15 9.5s-11-3-15-9.5z"/><circle cx="24" cy="20" r="6"/></g><circle cx="24" cy="20" r="3.2" fill="currentColor"/></symbol>
 </svg>
 <main>
@@ -187,15 +210,28 @@ header .buttons.secondary{margin-top:-6px}
   </section>
 
 
-  <section aria-labelledby="rb">
-    <h2 id="rb">Reading Behaviour</h2>
-    <p class="lead">Two readers of the same paragraph, both answering the comprehension question correctly. Replays at 4× speed with <a href="https://github.com/lacclab/scanpath-studio">Scanpath Studio</a>.</p>
-    <div class="readers">
-      <figure><img src="static/images/reader_a.gif" alt="Replay of reader A: many fixations and regressions over the paragraph" loading="lazy"><figcaption><b>Reader A · 82 s</b> · <svg class="ic c-fg sm" aria-hidden="true"><use href="#i-check"/></svg> Correct</figcaption></figure>
-      <figure><img src="static/images/reader_b.gif" alt="Replay of reader B: fewer fixations, fluent reading of the same paragraph" loading="lazy"><figcaption><b>Reader B · 28 s</b> · <svg class="ic c-fg sm" aria-hidden="true"><use href="#i-check"/></svg> Correct</figcaption></figure>
+  <section aria-labelledby="why">
+    <h2 id="why">Why Eye Movements?</h2>
+    <p class="lead">Readability methods are usually validated against comprehension tests or human difficulty labels. Eye movements give a <span class="k-blue">cognitive</span> signal of how easy a text is to read, in real time.</p>
+    <div class="compare">
+      <div class="hd">Comprehension tests &amp; labels</div><div></div><div class="hd right"><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg><span class="k-blue">Eye movements</span></div>
+      <div class="cell bad"><svg class="ic sm c-fg" aria-hidden="true"><use href="#i-x"/></svg><span>Measured after reading</span></div><div class="arrow" aria-hidden="true">→</div><div class="cell good"><svg class="ic sm c-blue" aria-hidden="true"><use href="#i-check"/></svg><span>Online: during reading</span></div><div class="cell bad"><svg class="ic sm c-fg" aria-hidden="true"><use href="#i-x"/></svg><span>Depends on written questions</span></div><div class="arrow" aria-hidden="true">→</div><div class="cell good"><svg class="ic sm c-blue" aria-hidden="true"><use href="#i-check"/></svg><span>No questions needed</span></div><div class="cell bad"><svg class="ic sm c-fg" aria-hidden="true"><use href="#i-x"/></svg><span>A few discrete levels</span></div><div class="arrow" aria-hidden="true">→</div><div class="cell good"><svg class="ic sm c-blue" aria-hidden="true"><use href="#i-check"/></svg><span>Continuous measures</span></div><div class="cell bad"><svg class="ic sm c-fg" aria-hidden="true"><use href="#i-x"/></svg><span>Different texts: topic mixed with readability</span></div><div class="arrow" aria-hidden="true">→</div><div class="cell good"><svg class="ic sm c-blue" aria-hidden="true"><use href="#i-check"/></svg><span>Same text, two versions: content controlled</span></div>
     </div>
+  </section>
+
+  <section aria-labelledby="cce">
+    <h2 id="cce">Content-Controlled Evaluation</h2>
+    <p class="lead">Each paragraph has an <span class="k-red">original</span> and a <span class="k-green">simplified</span> version written by language teachers: same topic and content, only the wording changes.</p>
+    <div class="pair">
+      <div class="txt"><h3><span class="c-red"><svg class="ic sm c-red" aria-hidden="true"><use href="#i-book"/></svg> Original</span><small>86 words</small></h3><mark class="d-red">Viennese-born</mark> Helena Hartlauer, 32, said she was not surprised <mark class="d-red">at</mark> her city&#x27;s top position. <mark class="d-red">The municipality&#x27;s social democratic</mark> government has a <mark class="d-red">long tradition of investing in high-quality social housing, making Vienna almost uniquely affordable among major</mark> cities. &quot;I live in a <mark class="d-red">100sq-meter turn-of-the-century</mark> apartment in a good area about 20 minutes&#x27; walk from the city center. But my rent is just €800 (£625) a month.&quot; <mark class="d-red">An equivalent</mark> apartment in London <mark class="d-red">would cost upwards of</mark> £2,000 and even more in New York, <mark class="d-red">ranked</mark> 44th in the <mark class="d-red">table.</mark></div>
+      <div class="txt"><h3><span class="c-green"><svg class="ic sm c-green" aria-hidden="true"><use href="#i-book"/></svg> Simplified</span><small>90 words</small></h3>Helena Hartlauer, 32, <mark class="d-green">is from Vienna. She</mark> said she was not surprised <mark class="d-green">about</mark> her city&#x27;s top position. <mark class="d-green">For many years, Vienna&#x27;s</mark> government has <mark class="d-green">spent money on good social housing. This makes Vienna</mark> a <mark class="d-green">cheap place to live compared to other big</mark> cities. &quot;I live in a <mark class="d-green">100 square-meter</mark> apartment in a good area about 20 minutes&#x27; walk from the city center. But my rent is just €800 (£625) a month.&quot; <mark class="d-green">A similar</mark> apartment in London <mark class="d-green">costs over</mark> £2,000 and even more in New York, <mark class="d-green">which came</mark> 44th in the <mark class="d-green">study.</mark></div>
+    </div>
+    <div class="readers">
+      <figure><img src="static/images/original_vienna.gif" alt="Replay at 4x speed of one native English reader reading the original paragraph: 26 seconds, 28 regressions" loading="lazy"><figcaption><b class="c-red">Original · 26 s · 28 regressions</b></figcaption></figure>
+      <figure><img src="static/images/simplified_vienna.gif" alt="Replay at 4x speed of one native English reader reading the simplified paragraph: 20 seconds, 9 regressions" loading="lazy"><figcaption><b class="c-green">Simplified · 20 s · 9 regressions</b></figcaption></figure>
+    </div>
+    <p class="lead">One reader per version, replayed at 4× speed with <a href="https://github.com/lacclab/scanpath-studio">Scanpath Studio</a>. Individual readers vary, so the evaluation averages about 100 readers per version.</p>
     <p class="tool-link"><a class="btn lab" href="https://github.com/lacclab/scanpath-studio">Scanpath Studio · Replay Eye-Tracking Trials</a></p>
-    <p class="lead">Same answer, very different <span class="k-blue">reading</span>. Comprehension tests and ratings miss what happens while people read.</p>
   </section>
 
   <section aria-labelledby="meth">
@@ -241,14 +277,21 @@ header .buttons.secondary{margin-top:-6px}
     </div>
   </section>
 
+  <section aria-labelledby="rm">
+    <h2 id="rm">Readability Methods</h2>
+    <p class="lead">20 <span class="k-orange">readability methods</span>, benchmarked against 9 psycholinguistic measures from reading research.</p>
+    <div class="methods"><div class="card"><h3 class="k-orange">Traditional Formulas</h3><ul><li>Flesch RE</li><li>Dale-Chall</li><li>Gunning Fog</li><li>ARI</li><li>Coleman-Liau</li><li>Flesch-Kincaid</li></ul></div><div class="card"><h3 class="k-orange">Modern NLP Methods</h3><ul><li>CML2RI</li><li>CAREC</li><li>CARES</li><li>SBERT</li><li>PPL</li><li>SLOR</li></ul></div><div class="card"><h3 class="k-orange">LLMs</h3><ul><li>Llama 3.3 70B</li><li>GPT-4o</li><li>GPT-5</li><li>Gemini 2.0 Flash</li><li>Gemini 2.5 Pro</li><li>Claude Sonnet 4.0</li></ul></div><div class="card"><h3 class="k-orange">Commercial Systems</h3><ul><li>TextEvaluator</li><li>Lexile</li></ul></div><div class="card psy"><h3 class="">Psycholinguistic Measures</h3><ul><li>Idea Density</li><li>Integration Cost</li><li>Embedding Depth</li><li>PLL</li><li>UID</li><li>Entropy</li><li>Word Length</li><li>Word Frequency</li><li>Surprisal</li></ul></div></div>
+  </section>
+
   <section aria-labelledby="res">
     <h2 id="res">Results</h2>
     <div class="result">
       <figure>
-        <img src="static/images/results.png" alt="Bar chart of Pearson r between the change in each method's score and the change in reading ease, from original to simplified texts. Readability methods from 1948 to 2025 are low; surprisal is highest.">
-        <figcaption>Pearson r between Δ Score (original − simplified) and Δ Regression Rate from eye tracking, for each readability method. Bar color marks significance.
+        <img src="static/images/results.png" alt="Bar chart of Pearson r between the change in each method's score and the change in regression rate, from original to simplified paragraphs. Readability methods from 1948 to 2025 are low; surprisal is highest.">
+        <figcaption>Pearson r between Δ Score (original − simplified) and Δ Regression Rate from eye tracking, paragraph level, for each readability method and psycholinguistic measure. Error bars: 95% bootstrap confidence intervals. Bar color marks significance.
           <span class="legend" aria-label="Legend">
             <span><i style="background:#7d8a87"></i>Not significant</span>
+            <span><i style="background:#f2c12e"></i>p &lt; 0.05</span>
             <span><i style="background:#d9843a"></i>p &lt; 0.01</span>
             <span><i style="background:#c1554a"></i>p &lt; 0.001</span>
           </span></figcaption>
@@ -256,26 +299,29 @@ header .buttons.secondary{margin-top:-6px}
       <div class="takeaways">
         <div><h3 class="k-orange">Readability Methods</h3><p>Traditional formulas, NLP models, commercial systems and LLMs, from 1948 to 2025, are weak and mostly not significant predictors of reading ease.</p></div>
         <div><h3>Psycholinguistic Measures</h3><p>Psycholinguistic measures used to predict reading times do better. Surprisal is the best predictor overall.</p></div>
-        <div><h3 class="k-blue">Data</h3><p>OneStop: 360 native and 278 non-native English speakers reading 162 original and simplified paragraph pairs with eye tracking.</p></div>
+        <div><h3 class="k-blue">Data</h3><p>OneStop: about 640 readers (360 native and 278 non-native English speakers) reading 162 original and simplified paragraph pairs with eye tracking.</p></div>
       </div>
     </div>
   </section>
 
   <section aria-labelledby="rob">
     <h2 id="rob">Robustness</h2>
-    <div class="cards">
+    <div class="cards four">
       <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-users"/></svg><h3>Readers</h3><p>Native &amp; non-native English speakers</p></div>
       <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-search"/></svg><h3>Reading Regimes</h3><p>Reading for comprehension &amp; information seeking</p></div>
       <div class="card"><svg class="ic c-fg big" aria-hidden="true"><use href="#i-book"/></svg><h3>Text Units</h3><p>Sentences &amp; paragraphs</p></div>
+      <div class="card"><svg class="ic c-blue big" aria-hidden="true"><use href="#i-eye"/></svg><h3>Measures</h3><p>11 eye-tracking measures &amp; reading speed</p></div>
     </div>
   </section>
 
   <section aria-labelledby="tk">
     <h2 id="tk">Takeaways</h2>
     <ul class="takeaways-list icons-list">
+      <li><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg><span>A <span class="k-blue">cognitive</span> evaluation of <span class="k-orange">readability methods</span>.</span></li>
+      <li><svg class="ic c-fg" aria-hidden="true"><use href="#i-book"/></svg><span>Content-controlled evaluation: the same text in two versions.</span></li>
       <li><svg class="ic c-orange" aria-hidden="true"><use href="#i-warn"/></svg><span><span class="k-orange">Existing readability scores</span> may not reflect <span class="k-blue">reading ease</span>.</span></li>
+      <li><svg class="ic c-blue" aria-hidden="true"><use href="#i-chart"/></svg><span><span class="k-orange">Future readability measures</span> should reflect <span class="k-blue">reading ease</span>.</span></li>
       <li><svg class="ic c-fg" aria-hidden="true"><use href="#i-bulb"/></svg><span>Surprisal is a simple, strong baseline.</span></li>
-      <li><svg class="ic c-blue" aria-hidden="true"><use href="#i-eye"/></svg><span><span class="k-orange">Next readability measures</span> should reflect <span class="k-blue">reading ease</span>.</span></li>
     </ul>
   </section>
 
